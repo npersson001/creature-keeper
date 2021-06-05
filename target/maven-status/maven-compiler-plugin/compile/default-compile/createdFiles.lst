@@ -1,0 +1,6 @@
+com/personal/creaturekeeper/requests/ImmutableCreatureRequest.class
+com/personal/creaturekeeper/requests/ImmutableCreatureRequest$Builder.class
+com/personal/creaturekeeper/requests/ImmutableCreatureRequest$Json.class
+com/personal/creaturekeeper/webservice/CreatureController.class
+com/personal/creaturekeeper/CreatureKeeperApplication.class
+com/personal/creaturekeeper/requests/CreatureRequest.class
