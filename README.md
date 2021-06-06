@@ -16,7 +16,7 @@
 * 
 
 ### Security Focus
-* Mapping internal error codes as they leave the system
+* Basic auth added for local, to support production secrets vaults need to be created
 
 ### Resilience Focus
 * Logback using SLF4J logging 
