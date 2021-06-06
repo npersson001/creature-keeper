@@ -11,6 +11,12 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
+### Intellij Patch ###
+*.iml
+.idea/**/modules.xml
+.idea/**/misc.xml
+*.ipr
+
 ### Eclipse ###
 .metadata
 bin/
