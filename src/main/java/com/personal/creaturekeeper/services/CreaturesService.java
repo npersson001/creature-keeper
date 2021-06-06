@@ -1,5 +1,6 @@
 package com.personal.creaturekeeper.services;
 
+import com.personal.creaturekeeper.exceptions.CreatureNotFoundException;
 import com.personal.creaturekeeper.exceptions.CreatureValidationException;
 import com.personal.creaturekeeper.repositories.CreaturesRepository;
 import com.personal.creaturekeeper.requests.CreatureRequest;
@@ -26,18 +27,17 @@ public class CreaturesService {
         this.cacheManager = cacheManager;
     }
 
-    public CreaturePayload insertCreature(CreatureRequest creatureRequest) throws SQLException {
-        try {
-            creatureValidator.validateCreature(creatureRequest);
-        } catch (CreatureValidationException ex) {
+    public CreaturePayload insertCreature(CreatureRequest creatureRequest)
+            throws SQLException, CreatureValidationException {
 
-        }
-
+        creatureValidator.validateCreature(creatureRequest);
         return creaturesRepository.insertCreature(creatureRequest);
     }
 
     @Cacheable
-    public CreaturePayload queryCreature(int creatureId) throws SQLException {
+    public CreaturePayload queryCreature(int creatureId)
+            throws SQLException, CreatureNotFoundException {
+
         return creaturesRepository.queryCreature(creatureId);
     }
 

@@ -1,7 +1,7 @@
 package com.personal.creaturekeeper.services;
 
+import com.personal.creaturekeeper.exceptions.CreatureNotFoundException;
 import com.personal.creaturekeeper.requests.CreatureRequest;
-import com.personal.creaturekeeper.responses.CreatureResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -27,16 +27,15 @@ public class CreatureController {
     @PostMapping
     public ResponseEntity createCreature(@RequestBody CreatureRequest creatureRequest) {
         LOG.info("Got addCreature request: {}", creatureRequest);
-        CreatureResponse response = creatureRequestHandler.createCreature(creatureRequest);
-        return ResponseEntity.ok().body(response);
+        return creatureRequestHandler.createCreature(creatureRequest);
     }
 
     @GetMapping
     @RequestMapping("/{creatureId}")
-    public ResponseEntity getCreature(@PathVariable int creatureId) {
+    public ResponseEntity getCreature(@PathVariable int creatureId)
+            throws CreatureNotFoundException {
         LOG.info("Got getCreature request for id: {}", creatureId);
-        CreatureResponse response = creatureRequestHandler.getCreature(creatureId);
-        return ResponseEntity.ok().body(response);
+        return creatureRequestHandler.getCreature(creatureId);
     }
 
 }

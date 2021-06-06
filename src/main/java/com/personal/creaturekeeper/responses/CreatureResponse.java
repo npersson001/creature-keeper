@@ -13,8 +13,4 @@ public interface CreatureResponse {
     @Nullable
     CreaturePayload getCreaturePayload();
 
-    @JsonProperty("error")
-    @Nullable
-    ErrorDto getError();
-
 }

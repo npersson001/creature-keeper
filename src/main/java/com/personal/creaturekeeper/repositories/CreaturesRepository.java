@@ -1,5 +1,6 @@
 package com.personal.creaturekeeper.repositories;
 
+import com.personal.creaturekeeper.exceptions.CreatureNotFoundException;
 import com.personal.creaturekeeper.requests.CreatureRequest;
 import com.personal.creaturekeeper.responses.CreaturePayload;
 import com.personal.creaturekeeper.responses.ImmutableCreaturePayload;
@@ -43,50 +44,42 @@ public class CreaturesRepository {
             "INSERT INTO creatures (`name`, `species`, `age`) VALUES (?, ?, ?);";
 
     public CreaturePayload insertCreature(CreatureRequest creatureRequest) throws SQLException {
-        try {
-            PreparedStatement statement = connection.prepareStatement(CREATURES_INSERT_QUERY_BASE,
-                    Statement.RETURN_GENERATED_KEYS);
-            statement.setString(IDX_NAME, creatureRequest.getName());
-            statement.setString(IDX_SPECIES, creatureRequest.getSpecies());
-            statement.setInt(IDX_AGE, creatureRequest.getAge());
+        PreparedStatement statement = connection.prepareStatement(CREATURES_INSERT_QUERY_BASE,
+                Statement.RETURN_GENERATED_KEYS);
+        statement.setString(IDX_NAME, creatureRequest.getName());
+        statement.setString(IDX_SPECIES, creatureRequest.getSpecies());
+        statement.setInt(IDX_AGE, creatureRequest.getAge());
 
-            statement.executeUpdate();
-            long id = getInsertedId(statement.getGeneratedKeys());
-            LOG.info("Inserted into creatures db with id=[{}]", id);
-            return ImmutableCreaturePayload.builder()
-                    .id(id)
-                    .name(creatureRequest.getName())
-                    .species(creatureRequest.getSpecies())
-                    .age(creatureRequest.getAge())
-                    .build();
-        } catch (SQLException e) {
-            System.out.println("Exception: " + e.getMessage()); // TODO: Handle this exception.
-            throw e;
-        }
+        statement.executeUpdate();
+        long id = getInsertedId(statement.getGeneratedKeys());
+        LOG.info("Inserted into creatures db with id=[{}]", id);
+
+        return ImmutableCreaturePayload.builder()
+                .id(id)
+                .name(creatureRequest.getName())
+                .species(creatureRequest.getSpecies())
+                .age(creatureRequest.getAge())
+                .build();
     }
 
-    public CreaturePayload queryCreature(int creatureId) throws SQLException {
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement
-                    .executeQuery(String.format(CREATURES_SELECT_QUERY_BASE, creatureId));
+    public CreaturePayload queryCreature(int creatureId)
+            throws SQLException, CreatureNotFoundException{
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement
+                .executeQuery(String.format(CREATURES_SELECT_QUERY_BASE, creatureId));
 
-            LOG.info("Retrieved from creatures db with id=[{}]", creatureId);
+        LOG.info("Retrieved from creatures db with id=[{}]", creatureId);
 
-            CreaturePayload creature = null;
-            if (resultSet.next()) { // generally a while loop for multiple return
-                creature = ImmutableCreaturePayload.builder()
-                        .id(resultSet.getLong(COLUMN_ID))
-                        .name(resultSet.getString(COLUMN_NAME))
-                        .species(resultSet.getString(COLUMN_SPECIES))
-                        .age(resultSet.getInt(COLUMN_AGE))
-                        .build();
-            }
-
-            return creature;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage()); // TODO: Handle this exception.
-            throw e;
+        if (resultSet.next()) { // generally a while loop for multiple returns
+            return ImmutableCreaturePayload.builder()
+                    .id(resultSet.getLong(COLUMN_ID))
+                    .name(resultSet.getString(COLUMN_NAME))
+                    .species(resultSet.getString(COLUMN_SPECIES))
+                    .age(resultSet.getInt(COLUMN_AGE))
+                    .build();
+        } else {
+            throw new CreatureNotFoundException(
+                    String.format("Creature with creatureId=[%s] not found", creatureId));
         }
     }
 
