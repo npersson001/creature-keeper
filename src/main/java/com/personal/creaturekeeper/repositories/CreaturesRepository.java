@@ -52,7 +52,7 @@ public class CreaturesRepository {
 
             statement.executeUpdate();
             long id = getInsertedId(statement.getGeneratedKeys());
-            LOG.info("Inserted into creatures with id=[{}]", id);
+            LOG.info("Inserted into creatures db with id=[{}]", id);
             return ImmutableCreaturePayload.builder()
                     .id(id)
                     .name(creatureRequest.getName())
@@ -70,6 +70,8 @@ public class CreaturesRepository {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement
                     .executeQuery(String.format(CREATURES_SELECT_QUERY_BASE, creatureId));
+
+            LOG.info("Retrieved from creatures db with id=[{}]", creatureId);
 
             CreaturePayload creature = null;
             if (resultSet.next()) { // generally a while loop for multiple return
