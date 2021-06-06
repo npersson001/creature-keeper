@@ -9,12 +9,12 @@ import org.immutables.value.Value.Immutable;
 public interface CreatureRequest {
 
     @JsonProperty("name")
-    String name();
+    String getName();
 
     @JsonProperty("species")
-    String species();
+    String getSpecies();
 
     @JsonProperty("age")
-    int age();
+    int getAge();
 
 }

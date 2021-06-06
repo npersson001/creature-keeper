@@ -34,7 +34,7 @@ public final class ImmutableCreatureRequest implements CreatureRequest {
    */
   @JsonProperty("name")
   @Override
-  public String name() {
+  public String getName() {
     return name;
   }
 
@@ -43,7 +43,7 @@ public final class ImmutableCreatureRequest implements CreatureRequest {
    */
   @JsonProperty("species")
   @Override
-  public String species() {
+  public String getSpecies() {
     return species;
   }
 
@@ -52,12 +52,12 @@ public final class ImmutableCreatureRequest implements CreatureRequest {
    */
   @JsonProperty("age")
   @Override
-  public int age() {
+  public int getAge() {
     return age;
   }
 
   /**
-   * Copy the current immutable object by setting a value for the {@link CreatureRequest#name() name} attribute.
+   * Copy the current immutable object by setting a value for the {@link CreatureRequest#getName() name} attribute.
    * An equals check used to prevent copying of the same value by returning {@code this}.
    * @param value A new value for name
    * @return A modified copy of the {@code this} object
@@ -69,7 +69,7 @@ public final class ImmutableCreatureRequest implements CreatureRequest {
   }
 
   /**
-   * Copy the current immutable object by setting a value for the {@link CreatureRequest#species() species} attribute.
+   * Copy the current immutable object by setting a value for the {@link CreatureRequest#getSpecies() species} attribute.
    * An equals check used to prevent copying of the same value by returning {@code this}.
    * @param value A new value for species
    * @return A modified copy of the {@code this} object
@@ -81,7 +81,7 @@ public final class ImmutableCreatureRequest implements CreatureRequest {
   }
 
   /**
-   * Copy the current immutable object by setting a value for the {@link CreatureRequest#age() age} attribute.
+   * Copy the current immutable object by setting a value for the {@link CreatureRequest#getAge() age} attribute.
    * A value equality check is used to prevent copying of the same value by returning {@code this}.
    * @param value A new value for age
    * @return A modified copy of the {@code this} object
@@ -161,11 +161,11 @@ public final class ImmutableCreatureRequest implements CreatureRequest {
       this.ageIsSet = true;
     }
     @Override
-    public String name() { throw new UnsupportedOperationException(); }
+    public String getName() { throw new UnsupportedOperationException(); }
     @Override
-    public String species() { throw new UnsupportedOperationException(); }
+    public String getSpecies() { throw new UnsupportedOperationException(); }
     @Override
-    public int age() { throw new UnsupportedOperationException(); }
+    public int getAge() { throw new UnsupportedOperationException(); }
   }
 
   /**
@@ -209,9 +209,9 @@ public final class ImmutableCreatureRequest implements CreatureRequest {
    * Creates a builder for {@link ImmutableCreatureRequest ImmutableCreatureRequest}.
    * <pre>
    * ImmutableCreatureRequest.builder()
-   *    .name(String) // required {@link CreatureRequest#name() name}
-   *    .species(String) // required {@link CreatureRequest#species() species}
-   *    .age(int) // required {@link CreatureRequest#age() age}
+   *    .name(String) // required {@link CreatureRequest#getName() name}
+   *    .species(String) // required {@link CreatureRequest#getSpecies() species}
+   *    .age(int) // required {@link CreatureRequest#getAge() age}
    *    .build();
    * </pre>
    * @return A new ImmutableCreatureRequest builder
@@ -250,14 +250,14 @@ public final class ImmutableCreatureRequest implements CreatureRequest {
      */
     public final Builder from(CreatureRequest instance) {
       Objects.requireNonNull(instance, "instance");
-      name(instance.name());
-      species(instance.species());
-      age(instance.age());
+      name(instance.getName());
+      species(instance.getSpecies());
+      age(instance.getAge());
       return this;
     }
 
     /**
-     * Initializes the value for the {@link CreatureRequest#name() name} attribute.
+     * Initializes the value for the {@link CreatureRequest#getName() name} attribute.
      * @param name The value for name 
      * @return {@code this} builder for use in a chained invocation
      */
@@ -269,7 +269,7 @@ public final class ImmutableCreatureRequest implements CreatureRequest {
     }
 
     /**
-     * Initializes the value for the {@link CreatureRequest#species() species} attribute.
+     * Initializes the value for the {@link CreatureRequest#getSpecies() species} attribute.
      * @param species The value for species 
      * @return {@code this} builder for use in a chained invocation
      */
@@ -281,7 +281,7 @@ public final class ImmutableCreatureRequest implements CreatureRequest {
     }
 
     /**
-     * Initializes the value for the {@link CreatureRequest#age() age} attribute.
+     * Initializes the value for the {@link CreatureRequest#getAge() age} attribute.
      * @param age The value for age 
      * @return {@code this} builder for use in a chained invocation
      */
