@@ -18,12 +18,13 @@ public class CreatureRequestHandler {
 
     public CreatureResponse createCreature(CreatureRequest creatureRequest) {
         try {
-            creaturesService.insertCreature(creatureRequest);
-            return createErrorResponse(new RuntimeException());
+            CreaturePayload creaturePayload = creaturesService.insertCreature(creatureRequest);
+            return ImmutableCreatureResponse.builder()
+                    .creaturePayload(creaturePayload)
+                    .build();
         } catch (Exception ex) {
             return createErrorResponse(ex);
         }
-
     }
 
     public CreatureResponse getCreature(int creatureId) {
@@ -35,8 +36,6 @@ public class CreatureRequestHandler {
         } catch (Exception ex) {
             return createErrorResponse(ex);
         }
-
-
     }
 
     //TODO: fix how we return error codes.

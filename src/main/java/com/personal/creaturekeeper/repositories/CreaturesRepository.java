@@ -8,8 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CreaturesRepository {
+
+    private static final Logger LOG = LoggerFactory.getLogger(CreaturesRepository.class);
 
     private final Connection connection;
 
@@ -38,7 +42,7 @@ public class CreaturesRepository {
     private static final String CREATURES_INSERT_QUERY_BASE =
             "INSERT INTO creatures (`name`, `species`, `age`) VALUES (?, ?, ?);";
 
-    public void insertCreature(CreatureRequest creatureRequest) {
+    public CreaturePayload insertCreature(CreatureRequest creatureRequest) throws SQLException {
         try {
             PreparedStatement statement = connection.prepareStatement(CREATURES_INSERT_QUERY_BASE,
                     Statement.RETURN_GENERATED_KEYS);
@@ -48,9 +52,16 @@ public class CreaturesRepository {
 
             statement.executeUpdate();
             long id = getInsertedId(statement.getGeneratedKeys());
-            System.out.println("got generated key: ");
+            LOG.info("Inserted into creatures with id=[{}]", id);
+            return ImmutableCreaturePayload.builder()
+                    .id(id)
+                    .name(creatureRequest.getName())
+                    .species(creatureRequest.getSpecies())
+                    .age(creatureRequest.getAge())
+                    .build();
         } catch (SQLException e) {
             System.out.println("Exception: " + e.getMessage()); // TODO: Handle this exception.
+            throw e;
         }
     }
 

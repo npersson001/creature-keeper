@@ -27,8 +27,8 @@ public class CreatureController {
     @PostMapping
     public ResponseEntity createCreature(@RequestBody CreatureRequest creatureRequest) {
         LOG.info("Got addCreature request: {}", creatureRequest);
-        creatureRequestHandler.createCreature(creatureRequest);
-        return ResponseEntity.ok().build();
+        CreatureResponse response = creatureRequestHandler.createCreature(creatureRequest);
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping

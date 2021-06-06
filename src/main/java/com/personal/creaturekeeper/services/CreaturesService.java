@@ -19,14 +19,14 @@ public class CreaturesService {
         this.creatureValidator = creatureValidator;
     }
 
-    public void insertCreature(CreatureRequest creatureRequest) {
+    public CreaturePayload insertCreature(CreatureRequest creatureRequest) throws SQLException {
         try {
             creatureValidator.validateCreature(creatureRequest);
         } catch (CreatureValidationException ex) {
 
         }
 
-        creaturesRepository.insertCreature(creatureRequest);
+        return creaturesRepository.insertCreature(creatureRequest);
     }
 
     public CreaturePayload queryCreature(int creatureId) throws SQLException {
