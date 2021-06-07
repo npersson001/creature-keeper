@@ -1,0 +1,14 @@
+version: '3.4'
+services:
+
+  creature_keeper:
+    image: localhost:5000/personal/creature:dev
+    networks:
+      - creature
+    environment:
+      DATABASE_CREATURE_KEEPER_HOST: maria
+
+networks:
+  creature:
+    external:
+      name: creature

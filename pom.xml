@@ -25,6 +25,7 @@
     <caffeine.version>2.9.1</caffeine.version>
     <jacoco.version>0.8.5</jacoco.version>
     <mockito.version>2.28.2</mockito.version>
+    <maven-jib-plugin.version>2.5.2</maven-jib-plugin.version>
   </properties>
 
   <dependencies>
@@ -189,6 +190,34 @@
             <!--  controller classes should be tested with integration tests  -->
             <exclude>**/*Controller.class</exclude>
           </excludes>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <version>${maven-jib-plugin.version}</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>build</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <from>
+            <image>openjdk:11.0.3-jre-slim</image>
+          </from>
+          <to>
+            <image>localhost:5000/personal</image>
+          </to>
+          <container>
+            <ports>
+              <port>8080</port>
+              <port>8443</port>
+            </ports>
+          </container>
         </configuration>
       </plugin>
 

@@ -60,6 +60,7 @@ Entering `root` as password when prompted for it.
 ## Future Development
 
 ### TODO
+* comment on important methods
 * enforce code style
 * micrometer metrics added
 * fix garbage exceptions during build from jacoco
