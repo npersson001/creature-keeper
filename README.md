@@ -29,10 +29,31 @@ where the body of the POST contains a JSON object representing the creature.  He
 
 `GET {host}/creatures/{creatureId}`
 
-When running locally the host is `localhost:8080`
+When running locally the host is `localhost:8090`
 
 You will need to use basic authentication on the requests you send to the api, locally the username and
 password are set to `user` and `password` respectively.
+
+### Running Locally
+You can run both the rest application and the database in docker containers by running the following 
+sequence of commands in your terminal:
+
+```
+$ ./dockerStartRegistry.sh
+$ ./dockerBuildAll.sh
+$ ./dockerStartAll.sh
+```
+
+This will allow you to hit the api with the directions given in the above section. To tear down the 
+containers simply run:
+
+```
+$ ./dockerStopAll.sh
+```
+
+The registry is a local docker registry that will hold the image jib builds of the application. The 
+build is run by the buildAll script and the image is put into the registry.  Running the startAll script
+pulls the images from the registry and creates the docker containers and the connecting bridged network. 
 
 ### Interacting with MariaDB Container
 You can open an interactive terminal in the mariadb container by running the following command:
