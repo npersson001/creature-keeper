@@ -1,6 +1,6 @@
 package com.personal.creaturekeeper.config;
 
-import com.personal.creaturekeeper.repositories.CreaturesRepository;
+import com.personal.creaturekeeper.repositories.CreatureRepository;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -37,10 +37,10 @@ public class DatabaseConnectionConfiguration {
     }
 
     @Bean
-    public CreaturesRepository creaturesRepository(@Qualifier(CREATURE_KEEPER_DB_CONN)
+    public CreatureRepository creaturesRepository(@Qualifier(CREATURE_KEEPER_DB_CONN)
             Connection connection) {
 
-        return new CreaturesRepository(connection);
+        return new CreatureRepository(connection);
     }
 
 }

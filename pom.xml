@@ -24,6 +24,7 @@
     <junit.api.version>5.4.2</junit.api.version>
     <caffeine.version>2.9.1</caffeine.version>
     <jacoco.version>0.8.5</jacoco.version>
+    <mockito.version>2.28.2</mockito.version>
   </properties>
 
   <dependencies>
@@ -93,6 +94,18 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit.engine.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-inline</artifactId>
+      <version>${mockito.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -170,6 +183,12 @@
           </execution>
         </executions>
         <configuration>
+          <excludes>
+            <!--  application classes shouldnt have logic in them  -->
+            <exclude>**/*Application.class</exclude>
+            <!--  controller classes should be tested with integration tests  -->
+            <exclude>**/*Controller.class</exclude>
+          </excludes>
         </configuration>
       </plugin>
 

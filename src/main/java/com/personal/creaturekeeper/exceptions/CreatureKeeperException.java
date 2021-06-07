@@ -6,8 +6,4 @@ public class CreatureKeeperException extends Exception {
         super(message);
     }
 
-    public CreatureKeeperException(String message, Exception ex) {
-        super(message, ex);
-    }
-
 }

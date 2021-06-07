@@ -11,15 +11,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CreatureRequestHandler {
-    private final CreaturesService creaturesService;
+    private final CreatureService creatureService;
 
-    public CreatureRequestHandler(CreaturesService creaturesService) {
-        this.creaturesService = creaturesService;
+    public CreatureRequestHandler(CreatureService creatureService) {
+        this.creatureService = creatureService;
     }
 
     public ResponseEntity createCreature(CreatureRequest creatureRequest) {
         try {
-            CreaturePayload creaturePayload = creaturesService.insertCreature(creatureRequest);
+            CreaturePayload creaturePayload = creatureService.insertCreature(creatureRequest);
             return createSuccessResponse(ImmutableCreatureResponse.builder()
                     .creaturePayload(creaturePayload)
                     .build());
@@ -30,7 +30,7 @@ public class CreatureRequestHandler {
 
     public ResponseEntity getCreature(int creatureId) {
         try {
-            CreaturePayload creaturePayload = creaturesService.queryCreature(creatureId);
+            CreaturePayload creaturePayload = creatureService.queryCreature(creatureId);
             return createSuccessResponse(ImmutableCreatureResponse.builder()
                     .creaturePayload(creaturePayload)
                     .build());
