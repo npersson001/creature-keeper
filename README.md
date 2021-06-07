@@ -77,6 +77,7 @@ Entering `root` as password when prompted for it.
 * Cache in front of DB (caffeine)
 * Specific error response status/message
 * Flyway migration files for safe database maintenance 
+* Pooled DB connections
 
 ## Future Development
 
@@ -90,9 +91,9 @@ Entering `root` as password when prompted for it.
 ### If Time Allows
 * Add undo Flyway migration files
 * Async DB connection (jasync-sql)
-* Connection pool (apache dbcp?)
 * Using embedded db for unit test for repository
 * Queue between api worker thread and worker threads that interact with the db
+* Encrypt data at rest
 
 
 

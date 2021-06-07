@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,10 +17,10 @@ public class CreatureRepository {
 
     private static final Logger LOG = LoggerFactory.getLogger(CreatureRepository.class);
 
-    private final Connection connection;
+    private final DataSource dataSource;
 
-    public CreatureRepository(Connection connection) {
-        this.connection = connection;
+    public CreatureRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     protected static final String COLUMN_ID = "id";
@@ -44,6 +45,8 @@ public class CreatureRepository {
             "INSERT INTO creatures (`name`, `species`, `age`) VALUES (?, ?, ?);";
 
     public CreaturePayload insertCreature(CreatureRequest creatureRequest) throws SQLException {
+        Connection connection = dataSource.getConnection();
+
         PreparedStatement statement = connection.prepareStatement(CREATURES_INSERT_QUERY_BASE,
                 Statement.RETURN_GENERATED_KEYS);
         statement.setString(IDX_NAME, creatureRequest.getName());
@@ -62,15 +65,18 @@ public class CreatureRepository {
                 .build();
     }
 
-    public CreaturePayload queryCreature(int creatureId)
-            throws SQLException, CreatureNotFoundException{
+    public CreaturePayload queryCreature(int creatureId) throws SQLException,
+            CreatureNotFoundException{
+
+        Connection connection = dataSource.getConnection();
+
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement
                 .executeQuery(String.format(CREATURES_SELECT_QUERY_BASE, creatureId));
 
-        LOG.info("Retrieved from creatures db with id=[{}]", creatureId);
-
         if (resultSet.next()) { // generally a while loop for multiple returns
+            LOG.info("Retrieved from creatures db with id=[{}]", creatureId);
+
             return ImmutableCreaturePayload.builder()
                     .id(resultSet.getLong(COLUMN_ID))
                     .name(resultSet.getString(COLUMN_NAME))
@@ -78,6 +84,8 @@ public class CreatureRepository {
                     .age(resultSet.getInt(COLUMN_AGE))
                     .build();
         } else {
+            LOG.info("Creature not found in db with id=[{}]", creatureId);
+
             throw new CreatureNotFoundException(
                     String.format("Creature with creatureId=[%s] not found", creatureId));
         }

@@ -21,6 +21,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.personal.creaturekeeper.responses.CreaturePayload;
+import com.zaxxer.hikari.HikariDataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,16 +31,19 @@ import org.junit.jupiter.api.Test;
 
 public class CreatureRepositoryTest {
 
+    private HikariDataSource mockDatasource = mock(HikariDataSource.class);
     private Connection mockConnection = mock(Connection.class);
     private Statement mockStatement = mock(Statement.class);
     private PreparedStatement mockPreparedStatement = mock(PreparedStatement.class);
     private ResultSet mockResultSet = mock(ResultSet.class);
 
-    private CreatureRepository creatureRepository = new CreatureRepository(mockConnection);
+    private CreatureRepository creatureRepository = new CreatureRepository(mockDatasource);
 
     @BeforeEach
     public void beforeEach() throws Exception {
+        when(mockDatasource.getConnection()).thenReturn(mockConnection);
         when(mockConnection.createStatement()).thenReturn(mockStatement);
+
         when(mockStatement.executeQuery(any())).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenReturn(true);
         when(mockResultSet.getLong(eq(COLUMN_ID))).thenReturn(CREATURE_ID);
