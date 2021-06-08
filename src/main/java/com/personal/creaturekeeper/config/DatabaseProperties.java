@@ -1,24 +1,14 @@
 package com.personal.creaturekeeper.config;
 
+import java.util.Properties;
+
 public class DatabaseProperties {
 
-    private String url;
     private String host;
     private int port;
     private String username;
     private String password;
     private String database;
-    private String driver;
-    private int maxPool;
-    private int minIdle;
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
 
     public String getHost() {
         return host;
@@ -60,28 +50,12 @@ public class DatabaseProperties {
         this.database = database;
     }
 
-    public String getDriver() {
-        return driver;
-    }
+    public Properties getConfiguration() {
+        Properties connectionProps = new Properties();
+        connectionProps.put("user", this.getUsername());
+        connectionProps.put("password", this.getPassword());
 
-    public void setDriver(String driver) {
-        this.driver = driver;
-    }
-
-    public int getMaxPool() {
-        return maxPool;
-    }
-
-    public void setMaxPool(int maxPool) {
-        this.maxPool = maxPool;
-    }
-
-    public int getMinIdle() {
-        return minIdle;
-    }
-
-    public void setMinIdle(int minIdle) {
-        this.minIdle = minIdle;
+        return connectionProps;
     }
 
 }

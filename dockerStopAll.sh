@@ -6,4 +6,3 @@ docker-compose down
 docker stop maria
 
 docker network rm creature
-

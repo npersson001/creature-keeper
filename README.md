@@ -71,6 +71,7 @@ Entering `root` as password when prompted for it.
 ### Security
 * Basic auth added for local, to support production secrets vaults need to be created
 * User never able to choose id for db primary key
+* Data encrypted at rest and while in system
 
 ### Resilience
 * Logback using SLF4J logging 
@@ -82,7 +83,6 @@ Entering `root` as password when prompted for it.
 ## Future Development
 
 ### TODO
-* comment on important methods
 * enforce code style
 * micrometer metrics added
 * fix garbage exceptions during build from jacoco
@@ -94,7 +94,3 @@ Entering `root` as password when prompted for it.
 * Async DB connection (jasync-sql)
 * Using embedded db for unit test for repository
 * Queue between api worker thread and worker threads that interact with the db
-* Encrypt data at rest
-
-
-
