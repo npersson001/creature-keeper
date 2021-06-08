@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,10 +17,10 @@ public class CreatureRepository {
 
     private static final Logger LOG = LoggerFactory.getLogger(CreatureRepository.class);
 
-    private final Connection connection;
+    private final DataSource dataSource;
 
-    public CreatureRepository(Connection connection) {
-        this.connection = connection;
+    public CreatureRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     protected static final String COLUMN_ID = "id";
@@ -50,6 +51,8 @@ public class CreatureRepository {
      * @throws SQLException
      */
     public CreaturePayload insertCreature(CreatureRequest creatureRequest) throws SQLException {
+        Connection connection = dataSource.getConnection();
+
         PreparedStatement statement = connection.prepareStatement(CREATURES_INSERT_QUERY_BASE,
                 Statement.RETURN_GENERATED_KEYS);
         statement.setString(IDX_NAME, creatureRequest.getName());
@@ -77,6 +80,8 @@ public class CreatureRepository {
      */
     public CreaturePayload queryCreature(int creatureId) throws SQLException,
             CreatureNotFoundException{
+
+        Connection connection = dataSource.getConnection();
 
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement

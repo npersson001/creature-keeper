@@ -25,20 +25,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class CreatureRepositoryTest {
 
+    private DataSource mockDataSource = mock(DataSource.class);
     private Connection mockConnection = mock(Connection.class);
     private Statement mockStatement = mock(Statement.class);
     private PreparedStatement mockPreparedStatement = mock(PreparedStatement.class);
     private ResultSet mockResultSet = mock(ResultSet.class);
 
-    private CreatureRepository creatureRepository = new CreatureRepository(mockConnection);
+    private CreatureRepository creatureRepository = new CreatureRepository(mockDataSource);
 
     @BeforeEach
     public void beforeEach() throws Exception {
+        when(mockDataSource.getConnection()).thenReturn(mockConnection);
         when(mockConnection.createStatement()).thenReturn(mockStatement);
 
         when(mockStatement.executeQuery(any())).thenReturn(mockResultSet);
