@@ -24,16 +24,25 @@ public class CreatureController {
         this.creatureRequestHandler = creatureRequestHandler;
     }
 
+    /**
+     * Rest API endpoint to create a Creature.
+     * @param creatureRequest - Json object representing a Creature.  Has name, species, and age.
+     * @return CreatureResponse - Envelope object containing a CreaturePayload.
+     */
     @PostMapping
     public ResponseEntity createCreature(@RequestBody CreatureRequest creatureRequest) {
         LOG.info("Got addCreature request: {}", creatureRequest);
         return creatureRequestHandler.createCreature(creatureRequest);
     }
 
+    /**
+     * Rest API endpoint to fetch creature using path variable creatureId.
+     * @param creatureId - Path variable that uniquely identifies a Creature.
+     * @return
+     */
     @GetMapping
     @RequestMapping("/{creatureId}")
-    public ResponseEntity getCreature(@PathVariable int creatureId)
-            throws CreatureNotFoundException {
+    public ResponseEntity getCreature(@PathVariable int creatureId) {
         LOG.info("Got getCreature request for id: {}", creatureId);
         return creatureRequestHandler.getCreature(creatureId);
     }

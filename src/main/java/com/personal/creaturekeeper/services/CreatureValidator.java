@@ -21,6 +21,11 @@ public class CreatureValidator {
         this.encryptionService = encryptionService;
     }
 
+    /**
+     * Method that validates CreatureRequest.  Confirms size of values does not exceed limits.
+     * @param creatureRequest - Json object representing a Creature.  Has name, species, and age.
+     * @throws CreatureValidationException
+     */
     public void validateCreature(CreatureRequest creatureRequest)
             throws CreatureValidationException {
         if (creatureRequest.getName().length() > MAX_NAME_LENGTH) {

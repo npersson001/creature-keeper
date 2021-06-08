@@ -23,6 +23,11 @@ public class CreatureService {
         this.creatureValidator = creatureValidator;
     }
 
+    /**
+     * Method that validates CreatureRequest and then uses repository to insert into DB.
+     * @param creatureRequest - Json object representing a Creature.  Has name, species, and age.
+     * @return CreaturePayload - Contains all data on Creature mapped from DB.
+     */
     public CreaturePayload insertCreature(CreatureRequest creatureRequest)
             throws SQLException, CreatureValidationException {
 
@@ -30,6 +35,11 @@ public class CreatureService {
         return creatureRepository.insertCreature(creatureRequest);
     }
 
+    /**
+     * Method to use repository to fetch data from DB.
+     * @param creatureId - Id that uniquely identifies a Creature.
+     * @return CreaturePayload - Contains all data on Creature mapped from DB.
+     */
     @Cacheable
     public CreaturePayload queryCreature(int creatureId)
             throws SQLException, CreatureNotFoundException {

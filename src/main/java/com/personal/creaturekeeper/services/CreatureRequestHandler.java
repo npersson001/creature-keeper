@@ -2,10 +2,8 @@ package com.personal.creaturekeeper.services;
 
 import com.personal.creaturekeeper.exceptions.CreatureKeeperStatus;
 import com.personal.creaturekeeper.requests.CreatureRequest;
-import com.personal.creaturekeeper.requests.ImmutableCreatureRequest;
 import com.personal.creaturekeeper.responses.CreaturePayload;
 import com.personal.creaturekeeper.responses.CreatureResponse;
-import com.personal.creaturekeeper.responses.ImmutableCreaturePayload;
 import com.personal.creaturekeeper.responses.ImmutableCreatureResponse;
 import com.personal.creaturekeeper.responses.ImmutableErrorDto;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +20,12 @@ public class CreatureRequestHandler {
         this.encryptionService = encryptionService;
     }
 
+    /**
+     * Method to encrypt sensitive parts of request and use CreatureService to create Creature.
+     * Centralized spot for consolidating errors and presenting them in response.
+     * @param creatureRequest - Json object representing a Creature.  Has name, species, and age.
+     * @return ResponseEntity - Body holds CreatureResponse.
+     */
     public ResponseEntity createCreature(CreatureRequest creatureRequest) {
         try {
             CreatureRequest encryptedRequest = encryptionService.encryptRequest(creatureRequest);
@@ -36,9 +40,17 @@ public class CreatureRequestHandler {
         }
     }
 
+    /**
+     * Method to call CreatureService to get the Creature and decrypt its sensitive data.
+     * Centralized spot for consolidating errors and presenting them in response.
+     * @param creatureId - Id that uniquely identifies a Creature.
+     * @return ResponseEntity - Body holds CreatureResponse.
+     */
     public ResponseEntity getCreature(int creatureId) {
         try {
-            CreaturePayload creaturePayload = creatureService.queryCreature(creatureId);
+            CreaturePayload encryptedPayload = creatureService.queryCreature(creatureId);
+            CreaturePayload creaturePayload = encryptionService.decryptPayload(encryptedPayload);
+
             return createSuccessResponse(ImmutableCreatureResponse.builder()
                     .creaturePayload(creaturePayload)
                     .build());

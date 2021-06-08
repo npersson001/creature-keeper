@@ -44,6 +44,12 @@ public class CreatureRepository {
     private static final String CREATURES_INSERT_QUERY_BASE =
             "INSERT INTO creatures (`name`, `species`, `age`) VALUES (?, ?, ?);";
 
+    /**
+     * Uses connection to insert Creature into DB.
+     * @param creatureRequest - Json object representing a Creature.  Has name, species, and age.
+     * @return CreaturePayload - Contains all data on Creature mapped from DB.
+     * @throws SQLException
+     */
     public CreaturePayload insertCreature(CreatureRequest creatureRequest) throws SQLException {
         Connection connection = dataSource.getConnection();
 
@@ -65,6 +71,13 @@ public class CreatureRepository {
                 .build();
     }
 
+    /**
+     * Uses connection to fetch Creature from DB.
+     * @param creatureId - Id that uniquely identifies a Creature.
+     * @return CreaturePayload - Contains all data on Creature mapped from DB.
+     * @throws SQLException
+     * @throws CreatureNotFoundException
+     */
     public CreaturePayload queryCreature(int creatureId) throws SQLException,
             CreatureNotFoundException{
 
