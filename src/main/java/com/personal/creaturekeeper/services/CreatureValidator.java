@@ -15,13 +15,20 @@ public class CreatureValidator {
     private static final int MAX_SPECIES_LENGTH = 50;
     private static final int MAX_AGE = 9999;
 
+    private final EncryptionService encryptionService;
+
+    public CreatureValidator(EncryptionService encryptionService) {
+        this.encryptionService = encryptionService;
+    }
+
     public void validateCreature(CreatureRequest creatureRequest)
             throws CreatureValidationException {
         if (creatureRequest.getName().length() > MAX_NAME_LENGTH) {
             throwException(creatureRequest,
                     String.format("Creature name too long (>%s).", MAX_NAME_LENGTH));
         }
-        if (creatureRequest.getSpecies().length() > MAX_SPECIES_LENGTH) {
+        if (encryptionService.decryptString(creatureRequest.getSpecies()).length()
+                > MAX_SPECIES_LENGTH) {
             throwException(creatureRequest,
                     String.format("Creature species too long (>%s).", MAX_SPECIES_LENGTH));
         }

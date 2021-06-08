@@ -87,6 +87,7 @@ Entering `root` as password when prompted for it.
 * micrometer metrics added
 * fix garbage exceptions during build from jacoco
 * add integration tests for api endpoints
+* dedupe database insertions
 
 ### If Time Allows
 * Add undo Flyway migration files

@@ -22,14 +22,17 @@ import org.springframework.http.ResponseEntity;
 public class CreatureRequestHandlerTest {
 
     private CreatureService mockCreatureService = mock(CreatureService.class);
+    private EncryptionService mockEncryptionService = mock(EncryptionService.class);
 
     private CreatureRequestHandler creatureRequestHandler =
-            new CreatureRequestHandler(mockCreatureService);
+            new CreatureRequestHandler(mockCreatureService, mockEncryptionService);
 
     @BeforeEach
     public void beforeEach() throws Exception {
         when(mockCreatureService.insertCreature(any())).thenReturn(DEFAULT_CREATURE_PAYLOAD);
         when(mockCreatureService.queryCreature(anyInt())).thenReturn(DEFAULT_CREATURE_PAYLOAD);
+        when(mockEncryptionService.encryptRequest(any())).thenReturn(DEFAULT_CREATURE_REQUEST);
+        when(mockEncryptionService.decryptPayload(any())).thenReturn(DEFAULT_CREATURE_PAYLOAD);
     }
 
     @Test
